@@ -294,9 +294,9 @@ class DuckDBAdapter(SQLAdapter):
         return DUCKDB_BASE_INCREMENTAL_STRATEGIES
 
     @available
-    def valid_incremental_strategies(self) -> Sequence[str]:
+    def valid_incremental_strategies(self) -> List[str]:
         """Return valid incremental strategies for the current DuckDB connection."""
-        return self.duckdb_incremental_strategies
+        return list(self.duckdb_incremental_strategies)
 
     @available.parse_none
     def get_incremental_strategy_macro(self, model_context, strategy: str):

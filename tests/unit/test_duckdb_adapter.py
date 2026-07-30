@@ -76,6 +76,15 @@ class TestDuckDBAdapter(unittest.TestCase):
             get_cols.assert_not_called()
             alter.assert_not_called()
 
+    def test_valid_incremental_strategies_returns_a_copy(self):
+        adapter = self.adapter
+        adapter.duckdb_incremental_strategies = ["append", "delete+insert"]
+        expected = list(adapter.valid_incremental_strategies())
+
+        adapter.valid_incremental_strategies().append("default")
+
+        self.assertEqual(adapter.valid_incremental_strategies(), expected)
+
 
 class TestDuckDBAdapterWithSecrets(unittest.TestCase):
     def setUp(self):
